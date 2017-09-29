@@ -14,23 +14,28 @@ while True:
             continue
 
         # Handle unique cases
-        if x == 0:
-            root_pwr_pairs[0] = "any power"
-        elif x == 1:
-            root_pwr_pairs[1] = "any power"
+        if x == 0 or x == 1:
+            root_pwr_pairs[x] = "any power"
+        elif x == -1:
+            root_pwr_pairs[x] = "any odd power"
         else:
 
             # Handle normal cases
-            for root in range(2, abs(x)+1):
+            print(x)
+            root = 2
+            pwr = 0
+
+            while root**pwr < abs(x):
                 pwr = 1
                 while root**pwr < abs(x):
                     pwr += 1
+
+                # Store root and power
                 if root**pwr == abs(x):
-                    # Handle multiple roots for positive integers, and negative roots
-                    # for negative integers
-                    if x > 1:
+                    if x > 1:  # Store both positive and negative roots for positive integers
                         root_pwr_pairs[root] = pwr
                         root_pwr_pairs[-root] = pwr
-                    elif x < 0:
+                    elif x < 0 and pwr%2 != 0:  # Store negative root for negative integer and odd powers
                         root_pwr_pairs[-root] = pwr
+            root += 1
         print(root_pwr_pairs)
