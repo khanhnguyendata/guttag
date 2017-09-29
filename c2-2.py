@@ -26,3 +26,13 @@ if odd_list:
     print("Largest odd number of the list is: " + str(largest_odd))
 else:
     print("No odd number was entered")
+
+# # Not using built-in sorted
+# if odd_list:
+#     largest_odd = 1
+#     for odd_num in odd_list:
+#         if odd_num >= largest_odd:
+#             largest_odd = odd_num
+#     print("Largest odd number of the list is: " + str(largest_odd))
+# else:
+#     print("No odd number was entered")
