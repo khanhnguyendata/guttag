@@ -13,9 +13,10 @@ for char in string:
     if char not in [",", " "]:
         num += char
     # until encountering comma, then add gathered number to list,
-    # and reset number string to zero to collect the next number
+    # and reset number string to an empty string to collect the next number
     else:
-        if num != "":
+        if num != "":   # if num is already an empty string (due to previous characters being " " or ",",
+            # don't add empty string num to list; instead, only add it if the previous character is a normal character
             l.append(num)
             num = ""
 # Add the last number that wasn't added to list due to no comma at end of string
