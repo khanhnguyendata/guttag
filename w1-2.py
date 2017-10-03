@@ -6,11 +6,10 @@
 
 s = 'shobooucnbobbgbobob'
 bob_count = 0
-for index in range(len(s)):
-    print(index, s[index])
+for index in range(len(s)-2):
     # Conditional still works even though s[index + 1/2] might be out of bounds,
     # since conditionals are evaluated left to right: later clauses might not be evaluated
     # if the earlier clauses are False
-    if index != len(s)-2 and index != len(s)-1 and s[index] == "b" and s[index + 1] == "o" and s[index + 2] == "b":
+    if s[index] == "b" and s[index + 1] == "o" and s[index + 2] == "b":
         bob_count += 1
 print(bob_count)

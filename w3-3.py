@@ -9,23 +9,18 @@
 #
 # Longest substring in alphabetical order is: abc
 
-import string
 
-
-def return_longest_substrings(original_string):
-    abc = list(string.ascii_lowercase)  # ['a', 'b', 'c', ..., 'z']
+def return_longest_substrings(string):
     substring = ""
     substring_list = []
 
-    for str_index in range(len(original_string) - 1):  # Stop loop at second to last character to avoid index error
-        char_current = original_string[str_index]
-        char_next = original_string[str_index + 1]
-        char_abcindex = abc.index(char_current)
-        char_next_abcindex = abc.index(char_next)
+    for index in range(len(string) - 1):  # Stop loop at second to last character to avoid index error
+        char_current = string[index]
+        char_next = string[index + 1]
         # If the next character is alphabetically greater or equal to current character:
         # Add both current character and next character if the longest substring is currently empty
         # Otherwise, if there's already a current substrate, just add next character to substring
-        if char_abcindex <= char_next_abcindex:
+        if char_current <= char_next:
             if substring == "":
                 substring += char_current
                 substring += char_next
@@ -51,7 +46,7 @@ def return_longest_substrings(original_string):
     # for example, string of one character, break character at end of string,
     # save the last lone character to substring list
     else:
-        substring_list.append(original_string[-1])
+        substring_list.append(string[-1])
 
     return substring_list
 
@@ -73,9 +68,8 @@ def longest_string(substring_list):
 
 
 def main():
-    s = "asgagabcdefgsaudgoieropm"
+    s = "aasdgadhsabcdefsadg"
     substring_list = return_longest_substrings(s)
-    print(substring_list)
     longest_substring = longest_string(substring_list)
     print("Longest substring in alphabetical order is: " + longest_substring)
 
