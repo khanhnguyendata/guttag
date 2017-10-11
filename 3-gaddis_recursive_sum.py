@@ -10,6 +10,3 @@ def gcd(x, y):
         return y
     else:
         return gcd(x, x % y)
-
-
-main()
