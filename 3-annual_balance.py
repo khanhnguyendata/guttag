@@ -1,5 +1,9 @@
 def problem1():
     def annual_remaining_balance(balance, annual_interest_rate, monthly_payment_rate):
+        """
+        Input: initial balance, annual interest rate, monthly payment
+        Output: remaining balance after one year
+        """
         monthly_interest_rate = annual_interest_rate / 12
 
         for month in range(1, 13):
@@ -20,6 +24,10 @@ def problem1():
 
 def problem2():
     def annual_remaining_balance(balance, annual_interest_rate, monthly_payment, months):
+        """
+        Input: initial balance, annual interest rate, monthly payment, number of months the nominal interest rate applies
+        Output: remaining balance after one year
+        """
         monthly_interest_rate = annual_interest_rate / months
 
         for month in range(1, months + 1):
