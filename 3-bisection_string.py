@@ -15,7 +15,6 @@ a boolean value.
 
 As you design the function, think very carefully about what the base cases should be.
 """
-import string
 
 
 def isIn(char, aStr):
