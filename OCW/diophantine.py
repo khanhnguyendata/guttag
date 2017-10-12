@@ -28,7 +28,7 @@ def diophantine_combination(x):
 
 
 diophantine_dict = {}
-for n in range(50, 66):
+for n in range(0, 70):
     diophantine_dict[n] = diophantine_combination(n)
 pprint.pprint(diophantine_dict)
 
