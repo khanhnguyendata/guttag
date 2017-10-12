@@ -11,7 +11,7 @@ would return the tuple (5, 15).
 """
 
 
-def subStringMatchExact(target,key):
+def subStringMatchExact(target, key):
     """
     Input: target string to be looked up and key string for the look up
     Output: list of indices where key string was found to start within target string
@@ -24,7 +24,7 @@ def subStringMatchExact(target,key):
         indices.append(starting_index + match_index)
 
         target = target[match_index + len(key):]
-    return indices
+    return tuple(indices)
 
-
-print(subStringMatchExact("atgacatgcacaagtatgcat","atgcat"))
+if __name__ == "__main__":
+    print(subStringMatchExact("atgacatgcacaagtatgcat","atgcat"))
