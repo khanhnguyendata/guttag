@@ -9,23 +9,9 @@ def powerset(items):
     :param items: input list of items
     :return: iterator that generates subset (in list-form) of all lengths
     """
-
-    def fixed_length_combo(items, length):
-        """
-        Generate subsets (of fixed length) of a list of items
-        :param items: input list of items
-        :param length: length of generated subset
-        :return: iterator that generates each fixed-length subset in list-form
-        """
-        for combo in combinations(items, length):
+    for i in range(len(items)+1):
+        for combo in combinations(items, i):
             yield list(combo)
-
-    # Combine all fixed-length combos into an iterator that will generate each set of combo each time
-    variable_length_combos = (fixed_length_combo(items, i) for i in range(len(items)+1))
-
-    # Chain all fixed-length combos so each subset could be queried for each fixed-length combos
-    all_combos = chain.from_iterable(variable_length_combos)
-    return all_combos
 
 
 # EdX's powerset using binary positions
@@ -86,4 +72,4 @@ plt.xlabel('Number of items in list')
 plt.ylabel('Timing')
 plt.legend([powerset_line, powersetEdX_line], ['powerset', 'powersetEdX'])
 plt.savefig('powerset vs powersetEdX.png')
-
+#
