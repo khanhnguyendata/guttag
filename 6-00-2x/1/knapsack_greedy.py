@@ -6,6 +6,9 @@ class Item:
         self.weight = weight
         self.density = self.value / self.weight
 
+    def get_name(self):
+        return self.name
+
     def get_value(self):
         return self.value
 
