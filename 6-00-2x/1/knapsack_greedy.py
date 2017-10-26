@@ -77,14 +77,17 @@ def main():
     names = ['a', 'b', 'c', 'd']
     values = [6, 7, 8, 9]
     weights = [3, 3, 2, 5]
+    # Build list of item objects from list of names, values, and weights
     items = build_items(names, values, weights)
 
+    # Set up different criterias for items to be taken
     criterias = ['highest value', 'lowest weight', 'highest value density']
     priorities_by = [Item.get_value, lambda obj: 1/obj.get_weight(), Item.get_density]
     available = 10
 
+    # Take items based on each criteria and display results
     for criteria, priority_by in zip(criterias, priorities_by):
         display_knapsack(items, available, criteria, priority_by)
 
-
-main()
+if __name__ == '__main__':
+    main()

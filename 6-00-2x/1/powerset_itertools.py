@@ -49,27 +49,31 @@ def wrapper(func, *args):
     return wrapped
 
 
-# Time both itertools powerset and EdX's powerset
-powerset_times = []
-powersetEdX_times = []
-lengths = []
-for items_length in range(21):
-    items = range(items_length)
-    powerset_time = timeit(wrapper(query_items, powerset, items),number=1)
-    powersetEdX_time = timeit(wrapper(query_items, powerSetEdX, items),number=1)
+def main():
+    # Time both itertools powerset and EdX's powerset
+    powerset_times = []
+    powersetEdX_times = []
+    lengths = []
+    for items_length in range(21):
+        items = range(items_length)
+        powerset_time = timeit(wrapper(query_items, powerset, items),number=1)
+        powersetEdX_time = timeit(wrapper(query_items, powerSetEdX, items),number=1)
 
-    lengths.append(items_length)
-    powerset_times.append(powerset_time)
-    powersetEdX_times.append(powersetEdX_time)
+        lengths.append(items_length)
+        powerset_times.append(powerset_time)
+        powersetEdX_times.append(powersetEdX_time)
 
 
-# Plot times for both powersets vs. number of items, powerset using itertools combinations and chain
-# perform much faster than powerset using binary positions, especially at higher number of items
-powerset_line, = plt.plot(lengths, powerset_times)
-powersetEdX_line, = plt.plot(lengths, powersetEdX_times)
-plt.title('itertools powerset (powerset) vs binary powerset (powersetEdX)')
-plt.xlabel('Number of items in list')
-plt.ylabel('Timing')
-plt.legend([powerset_line, powersetEdX_line], ['powerset', 'powersetEdX'])
-plt.savefig('powerset vs powersetEdX.png')
-#
+    # Plot times for both powersets vs. number of items, powerset using itertools combinations and chain
+    # perform much faster than powerset using binary positions, especially at higher number of items
+    powerset_line, = plt.plot(lengths, powerset_times)
+    powersetEdX_line, = plt.plot(lengths, powersetEdX_times)
+    plt.title('itertools powerset (powerset) vs binary powerset (powersetEdX)')
+    plt.xlabel('Number of items in list')
+    plt.ylabel('Timing')
+    plt.legend([powerset_line, powersetEdX_line], ['powerset', 'powersetEdX'])
+    plt.savefig('powerset vs powersetEdX.png')
+
+
+if __name__ == '__main__':
+    main()
