@@ -1,5 +1,5 @@
 from knapsack_greedy import build_items
-from random import sample
+from random import sample, randint
 
 
 def max_value(items, available_weight, call):
@@ -99,6 +99,7 @@ def display_names(items):
 
 
 class Counter:
+    """Create counter to keep track of max value calls and memo query calls"""
     def __init__(self, max_call=0, memo_call=0):
         self.max_call = max_call
         self.memo_call = memo_call
@@ -117,12 +118,12 @@ class Counter:
 
 
 def main():
-    names = range(10)
-    values = sample(range(1, 100), 10)
-    weights = sample(range(1, 100), 10)
+    names = range(16)
+    values = [randint(1, 10) for item in names]
+    weights = [randint(1, 10) for item in names]
     items = build_items(names, values, weights)
 
-    weight_limit = 100
+    weight_limit = 16
     memoizations = ['non-memoized', 'memoized']
     funcs = [max_value, max_value_memoized]
     for memoization, func in zip(memoizations, funcs):
