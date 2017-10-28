@@ -135,7 +135,7 @@ def depth_first_search(graph, start, end, path, shortest):
     for destination in destinations:
         if destination in path:
             return shortest
-        elif (not shortest) or len(path) < len(shortest):
+        elif shortest == [] or len(path) < len(shortest):
             shortest = depth_first_search(graph, destination, end, path, shortest)
 
     return shortest
