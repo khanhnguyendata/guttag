@@ -84,7 +84,7 @@ class Graph:
         else:
             self.edges[source].append(destination)
 
-    def get_destination(self, node):
+    def get_destinations(self, node):
         """
         Get destination nodes of a node in the graph
         :return: a node object in the graph
@@ -115,7 +115,7 @@ def path_display(path):
     return display
 
 
-def dfs(graph, start, end, path, shortest):
+def depth_first_search(graph, start, end, path, shortest):
     """
     Find the shortest path between 2 nodes in a graph using depth-first search
     :param graph: Graph object with all nodes and edges added
@@ -123,21 +123,48 @@ def dfs(graph, start, end, path, shortest):
     :param end: ending Node object
     :param path: current path
     :param shortest: current shortest path
-    :return: shorted path (in list of Node objects) from start node to end node
+    :return: shortest path (as list of Node objects) from start node to end node
     """
     path = path + [start]
+    print('dfs:', path_display(path))
 
     if start == end:
         return path
 
-    destinations = graph.get_destination(start)
+    destinations = graph.get_destinations(start)
     for destination in destinations:
         if destination in path:
             return shortest
         elif (not shortest) or len(path) < len(shortest):
-            shortest = dfs(graph, destination, end, path, shortest)
+            shortest = depth_first_search(graph, destination, end, path, shortest)
 
     return shortest
+
+
+def breadth_first_search(graph, start, end):
+    """
+    Find the shortest path between 2 nodes in a graph using depth-first search
+    :param graph: Graph object with nodes and edges added
+    :param start: starting Node object
+    :param end: ending Node object
+    :return: shortest path (as list of Node objects) from start node to end note
+    """
+    path_queue = [(start,)]
+
+    for path in path_queue:
+        print('bfs:', path_display(path))
+        last_node = path[-1]
+
+        # Return path if the last node is the end node
+        if last_node == end:
+            return path
+
+        # Otherwise, find the destinations of the last node and add new paths with those destinations to the queue
+        last_node_destinations = graph.get_destinations(last_node)
+        for destination in last_node_destinations:
+            if destination not in path:
+                new_path = path + (destination,)
+                path_queue.append(new_path)
 
 
 def main():
@@ -158,8 +185,13 @@ def main():
         graph.add_edge(Edge(Node(source), Node(destination)))
 
     # Find shortest path using depth-first search
-    dfs_result = dfs(graph, Node(0), Node(5), [], [])
-    print(path_display(dfs_result))
+    dfs_result = depth_first_search(graph, Node(0), Node(5), [], [])
+    print('dfs result:', path_display(dfs_result))
+    print('-----')
+
+    # Find shortest path using breadth-first search
+    bfs_result = breadth_first_search(graph, Node(0), Node(5))
+    print('bfs result:', path_display(bfs_result))
 
 
 if __name__ == '__main__':
