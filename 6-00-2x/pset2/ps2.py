@@ -100,7 +100,6 @@ class RectangularRoom(object):
         tile_y = int(pos.getY())
         assert tile_x < self.width
         assert tile_y < self.height
-        self.tiles.setdefault((tile_x, tile_y), True)
         self.tiles[(tile_x, tile_y)] = True
 
     def isTileCleaned(self, m, n):
@@ -148,12 +147,12 @@ class RectangularRoom(object):
         """
         return 0 <= pos.getX() < self.width and 0 <= pos.getY() < self.height
 
-room = RectangularRoom(4, 5)
-room.cleanTileAtPosition(Position(3.3, 0.2))
-print(room.isTileCleaned(3, 0))
-print(room.getNumTiles())
-print(room.getRandomPosition())
-print(room.isPositionInRoom(Position(3, 0)))
+# room = RectangularRoom(4, 5)
+# room.cleanTileAtPosition(Position(3.3, 0.2))
+# print(room.isTileCleaned(3, 0))
+# print(room.getNumTiles())
+# print(room.getRandomPosition())
+# print(room.isPositionInRoom(Position(3, 0)))
 
 # === Problem 2
 class Robot(object):
@@ -175,7 +174,11 @@ class Robot(object):
         room:  a RectangularRoom object.
         speed: a float (speed > 0)
         """
-        raise NotImplementedError
+        self.room = room
+        self.position = self.room.getRandomPosition()
+        self.room.cleanTileAtPosition(self.position)
+        self.direction = random.randrange(0, 360)
+        self.speed = speed
 
     def getRobotPosition(self):
         """
@@ -183,7 +186,7 @@ class Robot(object):
 
         returns: a Position object giving the robot's position.
         """
-        raise NotImplementedError
+        return self.position
     
     def getRobotDirection(self):
         """
@@ -192,7 +195,7 @@ class Robot(object):
         returns: an integer d giving the direction of the robot as an angle in
         degrees, 0 <= d < 360.
         """
-        raise NotImplementedError
+        return self.direction
 
     def setRobotPosition(self, position):
         """
@@ -200,7 +203,7 @@ class Robot(object):
 
         position: a Position object.
         """
-        raise NotImplementedError
+        self.position = position
 
     def setRobotDirection(self, direction):
         """
@@ -208,7 +211,7 @@ class Robot(object):
 
         direction: integer representing an angle in degrees
         """
-        raise NotImplementedError
+        self.direction = direction
 
     def updatePositionAndClean(self):
         """
@@ -236,11 +239,19 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        # Get new position object when standard robot moves
+        new_position = self.position.getNewPosition(self.direction, self.speed)
 
+        # If new position is outside room, re-randomize robot direction and get new position
+        while not self.room.isPositionInRoom(new_position):
+            self.direction = random.randrange(0, 360)
+            new_position = self.position.getNewPosition(self.direction, self.speed)
+
+        self.position = new_position
+        self.room.cleanTileAtPosition(self.position)
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-##testRobotMovement(StandardRobot, RectangularRoom)
+# testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
@@ -262,10 +273,24 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    raise NotImplementedError
+    times = []
+
+    for trial in range(num_trials):
+        # anim = ps2_visualize.RobotVisualization(num_robots, width, height)
+        room = RectangularRoom(width, height)
+        robots = [robot_type(room, speed) for i in range(num_robots)]
+        time = 0
+        while room.getNumCleanedTiles()/room.getNumTiles() < min_coverage:
+            for robot in robots:
+                # anim.update(room, robots)
+                robot.updatePositionAndClean()
+            time += 1
+        times.append(time)
+        # anim.done()
+    return sum(times)/len(times)
+
 
 # Uncomment this line to see how much your simulation takes on average
-##print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
 
 
 # === Problem 5
@@ -281,7 +306,14 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        while True:
+            self.direction = random.randrange(0, 360)
+            new_position = self.position.getNewPosition(self.direction, self.speed)
+            if self.room.isPositionInRoom(new_position):
+                break
+
+        self.position = new_position
+        self.room.cleanTileAtPosition(self.position)
 
 
 def showPlot1(title, x_label, y_label):
@@ -334,7 +366,8 @@ def showPlot2(title, x_label, y_label):
 # 1) Write a function call to showPlot1 that generates an appropriately-labeled
 #     plot.
 #
-#       (... your call here ...)
+# showPlot1('Title', 'x', 'y')
+
 #
 
 #
@@ -342,4 +375,4 @@ def showPlot2(title, x_label, y_label):
 #     plot.
 #
 #       (... your call here ...)
-#
+showPlot2('Title', 'x', 'y')
