@@ -1,0 +1,8 @@
+Theorem: If it is possible to buy x, x+1,…, x+5 sets of McNuggets, for some x, then it is
+possible to buy any number of McNuggets >= x, given that McNuggets come in 6, 9 and 20
+packs.
+
+Any number after x could be written as:
+n = x + 6a + b (where a = [0, inf) and b = [0, 5] for each a)
+Given that x + b are diophantine (since x to x + 5 are diophantine), and 6a is also diophantine (can be wholly divisible
+by 6), n is also diophantine

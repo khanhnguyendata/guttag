@@ -1,0 +1,2 @@
+
+print("atgacatgcacaagtatgcat".find("atgc"))
